@@ -1,6 +1,10 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
+const head = "fonts/avenirnext-demibold.ttf"
+const key = "fonts/avenirnext-regular.ttf"
+const body = "fonts/avenirnext-regular.ttf"
+
 function createCard(data, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
@@ -15,7 +19,7 @@ function createCard(data, path) {
 
 function generateHeader(doc) {
   doc
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(head)
     .fontSize(36)
     .text("Scorecard", 50, 50)
     .image('images/logo.png', 380, 15, {width: 200})
@@ -24,42 +28,39 @@ function generateHeader(doc) {
 function generateKeys(doc, data) {
   doc
     .fontSize(14)
-    .font("fonts/avenirnext-demibold.ttf")
-    .text("Key of Interest: ", 50, 115, { lineBreak: false })
-    .font("fonts/avenirnext-regular.ttf")
-    .text(data.keys.interest)
-    .font("fonts/avenirnext-demibold.ttf")
-    .text("Keywords: ", 50, doc.y, { lineBreak: false })
-    .font("fonts/avenirnext-regular.ttf")
-    .text(data.keys.keywords)
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(head)
+    .text(`Key of Interest:  ${data.keys.interest}`, 50, 115)
+    .text("Keywords: ", 50, doc.y + 5, { lineBreak: false })
+    .font(key)
+    .text(data.keys.keywords, 130, doc.y)
+    .font(head)
 
   doc
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(head)
     .text("Impact: ", 50, doc.y + 5, { lineBreak: false })
-    .font("fonts/avenirnext-regular.ttf")
-    .text(data.score.impact)
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(key)
+    .text(data.score.impact, 130, doc.y)
+    .font(head)
     .text("Certainity: ", 50, doc.y, { lineBreak: false })
-    .font("fonts/avenirnext-regular.ttf")
-    .text(data.score.certainity)
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(key)
+    .text(data.score.certainity, 130, doc.y)
+    .font(head)
     .text("Time Scale: ", 50, doc.y, { lineBreak: false })
-    .font("fonts/avenirnext-regular.ttf")
-    .text(data.score.timescale)
+    .font(key)
+    .text(data.score.timescale, 130, doc.y)
 
   generateHr(doc, doc.y + 10);
 }
 
 function generateBody(doc, data) {
   doc
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(head)
     .text("Summary: ", 50, doc.y + 20)
-    .font("Times-Roman")
+    .font(body)
     .text(data.body.summary, doc.x, doc.y + 5)
-    .font("fonts/avenirnext-demibold.ttf")
+    .font(head)
     .text("Implications: ", 50, doc.y + 10)
-    .font("Times-Roman")
+    .font(body)
     .text(data.body.implications, doc.x, doc.y + 5)
     
   generateHr(doc, doc.y + 10);
@@ -69,7 +70,7 @@ function generateLinks(doc, data) {
   doc
   .font("fonts/avenirnext-demibold.ttf")
   .text("References/ Related Resources: ", 50, doc.y + 20)
-  .font("Times-Roman")
+  .font(body)
 
   data.links.forEach( el => doc.text( el.name, {
     link: el.link,
