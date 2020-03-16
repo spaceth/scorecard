@@ -1,0 +1,18 @@
+{
+  "name": "pdfkit-invoice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "nlcst-to-string": "^2.0.4",
+    "pdfkit": "^0.9.0",
+    "retext": "^7.0.1",
+    "retext-keywords": "^6.0.0",
+    "retext-pos": "^3.0.0"
+  }
+}
