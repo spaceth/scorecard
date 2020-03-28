@@ -15,6 +15,7 @@ function createCard(data, path, dirname) {
   generateHeader(doc)
   generateKeys(doc, data)
   generateBody(doc, data)
+  generateTimeline(doc, data)
   generateLinks(doc, data)
   generateFigures(doc, data, dirname)
 
@@ -81,6 +82,18 @@ function generateBody(doc, data) {
   generateHr(doc, doc.y + 10)
 }
 
+function generateTimeline(doc, data) {
+  if (data.timeline) {
+    doc
+    .font(head)
+    .text("Brief Timeline: ", 50, doc.y + 20)
+    .font(body)
+    .text(data.timeline, doc.x, doc.y + 5)
+
+  generateHr(doc, doc.y + 10)
+  }
+}
+
 function generateLinks(doc, data) {
   doc
     .font(head)
@@ -106,7 +119,7 @@ function generateFigures(doc, data, dirname) {
     let prevHeight = 10
     let addPage = 0
     data.figures.forEach(el => {
-      if (doc.y >= 600) {
+      if (doc.y >= 550) {
         doc.addPage()
         addPage = 1
       }
@@ -114,7 +127,7 @@ function generateFigures(doc, data, dirname) {
       const dimensions = imageSize(image)
       doc.image(image, 50, addPage ? 50 : doc.y + prevHeight, {
           width: 200
-        }).text(`Figure ${count}: ${el.caption}`, 270, addPage ? 50 : doc.y + prevHeight)
+        }).text(`Figure ${count}: (${el.name}) ${el.caption}`, 270, addPage ? 50 : doc.y + prevHeight)
         ++count
       prevHeight = (200 / dimensions.width) * dimensions.height
       addPage = 0
